@@ -8,6 +8,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 import time, os, datetime
 
+
+__version__ = 'v1.2'
 # In order to run you will need to have chromedriver in the same folder, or set the file path so it can access it
 
 x = datetime.datetime.now()
@@ -31,7 +33,7 @@ elif x.month in (10,11,12):
 # or could completely remove this portion to have it
 # wait for manual input so it never sees the username/password.
 
-
+print(__version__)
 
 if os.path.isfile("login.txt") == True:
     os.system( "attrib -h login.txt" )
@@ -95,7 +97,7 @@ else:
 answer = "NO"
 os.system('cls')
 
-print("v1.2")
+print(__version__)
 
 
 while answer not in ('Y', 'YES'):
