@@ -11,7 +11,7 @@ import time, os, datetime, requests
 
 
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 if os.path.isfile("version.txt") == True:
     with open("version.txt","w") as f:
@@ -386,7 +386,7 @@ def create_worker():
     driver.close()
 
 
-#login()
-#create_position()
-#create_worker()
+login()
+create_position()
+create_worker()
                              
