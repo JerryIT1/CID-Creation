@@ -3,13 +3,56 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 from cryptography.fernet import Fernet
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-import time, os, datetime
+import time, os, datetime, requests
 
 
-__version__ = 'v1.2'
+
+__version__ = '1.3'
+
+if os.path.isfile("version.txt") == True:
+    with open("version.txt","w") as f:
+        f.write(__version__)
+
+else:
+    with open("version.txt","a+") as f:
+        f.write(__version__)
+
+
+
+
+response = requests.get('https://raw.githubusercontent.com/JerryIT1/CID-Creation/main/version.txt')
+data = response.text
+
+
+if float(data) > float(__version__):
+    print('Update Available')
+    print('App needs to update from '+__version__+ ' to '+data)
+    update = input("Would you like to update now? (Y/N)")
+    update = update.upper()
+    if update in ('Y', 'YES'):
+
+        options = Options() 
+        path = os.getcwd()
+        
+        prefs = {"download.default_directory" : path}
+        options.add_experimental_option("prefs", prefs)
+
+        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        driver.get('https://github.com/JerryIT1/CID-Creation/releases/download/v'+data+'/workday.exe')
+        #if os.path.isfile("workday.exe") == True:
+        #    os.rename('workday.exe', 'OLD workday.exe')
+        time.sleep(500)
+        
+        exit()
+    else:
+        os.system('cls')
+        print('When you want to update just run the program again :)')
+
+
 # In order to run you will need to have chromedriver in the same folder, or set the file path so it can access it
 
 x = datetime.datetime.now()
@@ -68,7 +111,6 @@ if os.path.isfile("login.txt") == True:
     
     os.system( "attrib +h login.txt" )
     os.system( "attrib +h filekey.key" )
-
 
 else:
     username = input("Enter username to login\n")
@@ -344,6 +386,7 @@ def create_worker():
     driver.close()
 
 
-login()
-create_position()
-create_worker()
+#login()
+#create_position()
+#create_worker()
+                             
