@@ -343,5 +343,5 @@ def create_worker():
 
 
 login()
-#create_position()
+create_position()
 create_worker()
