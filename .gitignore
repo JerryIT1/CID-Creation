@@ -1,0 +1,17 @@
+
+build/workday/Analysis-00.toc
+build/workday/base_library.zip
+build/workday/EXE-00.toc
+build/workday/localpycs/pyimod01_archive.pyc
+build/workday/localpycs/pyimod02_importers.pyc
+build/workday/localpycs/pyimod03_ctypes.pyc
+build/workday/localpycs/pyimod04_pywin32.pyc
+build/workday/localpycs/struct.pyc
+build/workday/PKG-00.toc
+build/workday/PYZ-00.pyz
+build/workday/PYZ-00.toc
+build/workday/warn-workday.txt
+build/workday/workday.pkg
+build/workday/xref-workday.html
+dist/workday.exe
+workday.spec
