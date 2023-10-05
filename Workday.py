@@ -11,7 +11,7 @@ import time, os, datetime, requests
 
 
 
-__version__ = '1.4'
+__version__ = '1.5'
 
 if os.path.isfile("version.txt") == True:
     with open("version.txt","w") as f:
@@ -213,7 +213,7 @@ def login():
 
 
 
-    print(WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div/div[1]/div/div[1]/div[3]/button"))))
+    #print(WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div/div[1]/div/div[1]/div[3]/button"))))
     time.sleep(0.5)
     try:
         if driver.find_element(By.XPATH, "//div[contains(text(),'Invalid user name')]"):
@@ -228,10 +228,14 @@ def login():
         print("")
 
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div/div[2]/div/div/div[2]/a"))).click()
+
+
+    print('logged in\n')
     
 
 
 def create_position():
+    print("Started Creating Position")
     # Opens Create Position Menu (Takes longer to load depending on internet speed, so it will load nonstop until it works or is closed)
     while True:
         try:
@@ -240,30 +244,49 @@ def create_position():
              continue
         else:
          break
+
+
+
+
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[2]/div[1]/section/div/div/div/div[1]/div/div[2]/div/div[2]/div/div/div[2]/div/div[4]/div/div/div/div[2]/div/div[1]/ul/li[1]/div"))).click()
     
     # Finds search bar and inputs facility that was inputted by end-user
-    elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[11]/div/div[2]/div/div[2]/div/div/ul/li/div[2]/div/div/div/div/div/div/input")))
-    time.sleep(0.5)
-    elem.send_keys('nursing '+facility)
-    time.sleep(0.5)
-    elem.send_keys(Keys.ENTER)
+
+
+    while True:
+        try:
+            elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[11]/div/div[2]/div/div[2]/div/div/ul/li/div[2]/div/div/div/div/div/div/input")))
+            time.sleep(0.5)
+            elem.send_keys('nursing '+facility)
+            time.sleep(0.5)
+            elem.send_keys(Keys.ENTER)
+        except:
+             continue
+        else:
+         break
+
     
 
     # Not going to have the bot click "submit" just in case facility has multiple options
 
 
     # Selects PBJ based worker
-    elem = WebDriverWait(driver, 180).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/ul/li[2]/div[2]/div/div/div/div/div/div/input")))
-    elem.send_keys("PBJ")
-    elem.send_keys(Keys.ENTER)
+    while True:
+        try:
+            elem = WebDriverWait(driver, 180).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/ul/li[2]/div[2]/div/div/div/div/div/div/input")))
+            elem.send_keys("PBJ")
+            elem.send_keys(Keys.ENTER)
+        except:
+             continue
+        else:
+         break
+
     
     # Enters position and start date (Right now its hard coded but will be later adjusted with time)
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/ul/li[3]/div[2]/div[1]/div/input"))).send_keys("Agency."+position)
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/ul/li[1]/div[2]/div/div/div/div[2]/div[1]/div[1]/input"))).send_keys(newDate)
     
-    # This is for the second start date but its broken right now
-            ## 
+    # This is for the second start date 
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/ul/li[2]/div[2]/div/div/div/div[2]/div[1]/div[1]/input"))).send_keys(newDate)
     time.sleep(1)
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/ul/li[2]/div[2]/div/div/div/div[2]/div[1]/div[1]/input"))).send_keys(newDate)
@@ -286,10 +309,20 @@ def create_position():
     elem.send_keys(Keys.ENTER)
 
     # Enters Facility, Made it so end user selects the actualy facility incase there are multiple
-    elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/ul/li[9]/div[2]/div/div/div/div/div/div/input")))
-    elem.send_keys(facility)
-    time.sleep(0.5)
-    elem.send_keys(Keys.ENTER)
+
+    while True:
+        try:
+            elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/ul/li[9]/div[2]/div/div/div/div/div/div/input")))
+            elem.send_keys(facility)
+            time.sleep(0.5)
+            elem.send_keys(Keys.ENTER)
+        except:
+             continue
+        else:
+         break
+    
+    print("Finished creating position")
+
 
 
 
@@ -297,6 +330,7 @@ def create_position():
 
 
 def create_worker():
+    print("Started creating worker")
     while True:
         try:
             WebDriverWait(driver, 180).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div/div[2]/div[1]/section/div/div/div/div[1]/div/div[2]/div/div[2]/div/div/div[2]/div/div[4]/div/div/div/div[2]/div/div[1]/ul/li[2]/div"))).click()
@@ -308,11 +342,20 @@ def create_worker():
 
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[11]/div/div[2]/div/div[2]/div/div/ul/li[2]/div[2]/div/div/div/div[2]/div/div/span/input"))).click()
 
-    elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[11]/div/div[2]/div/div[2]/div/div/ul/li[1]/div[2]/div/div/div/div/div/div/input")))
-    time.sleep(0.5)
-    elem.send_keys('nursing '+facility)
-    time.sleep(0.5)
-    elem.send_keys(Keys.ENTER)
+    while True:
+        try:
+            elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[11]/div/div[2]/div/div[2]/div/div/ul/li[1]/div[2]/div/div/div/div/div/div/input")))
+            time.sleep(0.5)
+            elem.send_keys('nursing '+facility)
+            time.sleep(0.5)
+            elem.send_keys(Keys.ENTER)
+        except:
+             continue
+        else:
+         break
+
+    
+
 
 
     
@@ -320,12 +363,18 @@ def create_worker():
         try:
             WebDriverWait(driver, 180).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/ul/li[5]/div[2]/div/div/div"))).click()
             
-            
         except:
             continue
         else:
             break
-    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div/div/ul/li[2]/div[2]/div/div/input"))).send_keys(fname)
+
+    while True:
+        try:
+            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div/div/ul/li[2]/div[2]/div/div/input"))).send_keys(fname)
+        except:
+            continue
+        else:
+            break
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div/div/ul/li[4]/div[2]/div/div/input"))).send_keys(lname)
 
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[2]/div/div[2]/div/div[1]/ul/li[2]"))).click()
@@ -370,13 +419,15 @@ def create_worker():
     time.sleep(1)
 
 
-    elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/div[1]/div/div[2]/div/ul/li[2]/div[2]/div/div/div/div/div[1]/div/input")))
-    elem.send_keys("Agency/Registry")
-
 
 
     elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/div[1]/div/div[2]/div/ul/li[4]/div[2]/div/div/div/div/div[1]/div/input")))
     elem.send_keys("Part Time")
+    elem.send_keys(Keys.ENTER)
+
+    elem = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div/div[2]/div[1]/section/div[1]/div/div/div[1]/div/div/div[1]/div/div[2]/div/ul/li[2]/div[2]/div/div/div/div/div[1]/div/input")))
+    elem.send_keys("Agency/Registry")
+    time.sleep(1)
     elem.send_keys(Keys.ENTER)
 
     # Stop the code so you can add cost center 

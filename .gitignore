@@ -15,3 +15,4 @@ build/workday/workday.pkg
 build/workday/xref-workday.html
 dist/workday.exe
 workday.spec
+*.exe
